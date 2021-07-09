@@ -1,9 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Respones } from '../model/respones.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherforecastService {
+  serverUrl = environment.url;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getWeatherRegion(request:Request){
+    return new Promise<Respones>((ok, notok) => {
+      this.http.post<Respones>(`${this.serverUrl}/Data`, request, {}).subscribe(res => {
+        console.log(res); 
+        ok(res);
+        
+      },error => {
+        notok(error)
+      })
+    })
+  }
 }

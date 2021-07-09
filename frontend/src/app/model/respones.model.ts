@@ -1,5 +1,5 @@
 import { WeatherForecast } from "./weatherforecast.model";
 
-export class Welcome {
+export class Respones {
     weatherForecasts: WeatherForecast[];
 }
