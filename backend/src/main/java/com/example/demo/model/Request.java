@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 public class Request {
     String region;
-    Integer duration;
 
 }

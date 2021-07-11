@@ -6,17 +6,104 @@
 <div>
   <mat-card>
     <form [formGroup]="form">
-      <h4>mat-select</h4>
+      <h4>เลือกภูมิภาค</h4>
       <mat-form-field appearance="fill">
         <mat-label>Select Region</mat-label>
-        <mat-select [formControl]="regionsControl" name="regions">
-          <mat-option *ngFor="let region of regions" [value]="region.value">
+        <mat-select formControlName="region" (selectionChange)="test()">
+          <mat-option *ngFor="let region of regions" [value]="region">
             {{region.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <p>Selected: {{regionsControl.value.id}}</p>
-      
+      <!-- <p>Selected: {{form.controls.region.value | json}} </p> -->
+      <!-- <pre>Data Respones: {{respones | json}}</pre> -->
+
     </form>
   </mat-card>
 </div>
+
+<mat-card>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="ปัจจุบัน">
+      <div *ngIf="!isLoad">
+        <div *ngFor="let item of respones.WeatherForecasts">
+          <mat-card>
+            จังหวัด: {{item.location.name}}
+            พยากรณ์อากาศ <br />
+            ประจำวันที่: {{getDate(item.forecasts[1].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[1].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[1].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[1].data.rh}}&nbsp; %
+            <!-- {{item | json}} -->
+          </mat-card>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="isLoad">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="ย้อนหลัง">
+      <div *ngIf="!isLoad">
+        <div *ngFor="let item of respones.WeatherForecasts">
+          <mat-card>
+            จังหวัด: {{item.location.name}}
+            พยากรณ์อากาศ <br />
+            ประจำวันที่: {{getDate(item.forecasts[0].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[0].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[0].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[0].data.rh}}&nbsp; %
+            <!-- {{item | json}} -->
+          </mat-card>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="isLoad">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="อนาคต">
+      <div *ngIf="!isLoad">
+        <div *ngFor="let item of respones.WeatherForecasts">
+          <mat-card>
+            จังหวัด: {{item.location.name}}
+            พยากรณ์อากาศ <br />
+            <mat-divider></mat-divider>
+            ประจำวันที่: {{getDate(item.forecasts[2].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[2].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[2].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[2].data.rh}}&nbsp; %
+            <mat-divider></mat-divider><br />
+            ประจำวันที่: {{getDate(item.forecasts[3].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[3].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[3].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[3].data.rh}}&nbsp; %
+            <mat-divider></mat-divider><br />
+            ประจำวันที่: {{getDate(item.forecasts[4].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[4].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[4].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[4].data.rh}}&nbsp; %
+            <mat-divider></mat-divider><br />
+            ประจำวันที่: {{getDate(item.forecasts[5].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[5].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[5].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[5].data.rh}}&nbsp; %
+            <mat-divider></mat-divider><br />
+            ประจำวันที่: {{getDate(item.forecasts[6].time)}} <br />
+            สภาพอากาศ: {{getCondition(item.forecasts[6].data.cond)}} <br />
+            อุณหภูมิ: {{item.forecasts[6].data.tc}}&nbsp; ํC <br />
+            ความชื้นสัมพัทธ์: {{item.forecasts[6].data.rh}}&nbsp; %
+            <mat-divider></mat-divider>
+            <!-- {{item | json}} -->
+          </mat-card>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <div *ngIf="isLoad">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
